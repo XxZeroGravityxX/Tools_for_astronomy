@@ -18,12 +18,12 @@ class log_creator(object):
                 if (std_name_file in name) and (name[-4:]=='fits'):
                     image_names.append(name)
                     self_paths.append(path)
-        image_names = sp.array(image_names)
 
         self.paths = sp.array(self_paths)
-        self.image_names = sp.sort(image_names)
+        self.image_names = sp.array(image_names)
 
-    def head_reader(self, keys='Default', check_science='Default'):
+    def head_reader(self, obs_type, keys='Default', check_science='Default',
+                    check_slit='Default'):
         '''Reads the header of each science image, and extract information of
         interest to save in the log file.
         It extracts by default certain information from ESO header's
@@ -31,13 +31,16 @@ class log_creator(object):
         on header.
         It needs a keyword to know if it is a science image or not'''
 
-        if keys=='Default' and check_science=='Default':
+        if (keys=='Default' and check_science=='Default' and
+        check_slit=='Default'):
             keys = sp.array(['ARCFILE', 'INSTRUME', 'DATE-OBS', 'EXPTIME',
                             'HIERARCH ESO DPR CATG',
                             'HIERARCH ESO INS SLIT1 NAME',  # Slit name
                             'HIERARCH ESO INS FILT1 NAME',   # Filter name
                             'HIERARCH ESO INS GRIS1 NAME'])  # Grism name
             check_science = 'HIERARCH ESO DPR CATG'
+            check_slit = 'HIERARCH ESO INS SLIT1 NAME'
+
         # Create array with rows for each image info
         images_info = []
         for ind,name in enumerate(self.image_names):
@@ -46,17 +49,30 @@ class log_creator(object):
             image = 0
             # Check if it is a science images
             try:
-                if header[check_science]=='SCIENCE':
-                    # Sub array with each image info
-                    image_info = []
-                    image_info.append(name)
-                    for key in keys:
-                        image_info.append(header[key])
-                    image_info = sp.array(image_info)
+                if obs_type=='phot':
+                    if (header[check_science]=='SCIENCE' and
+                    header[check_slit]=='Free'):
+                        # Sub array with each image info
+                        image_info = []
+                        for key in keys:
+                            image_info.append(header[key])
+                        image_info = sp.array(image_info)
 
-                    images_info.append(image_info)
-                else:
-                    continue
+                        images_info.append(image_info)
+                    else:
+                        continue
+                elif obs_type=='spec':
+                    if (header[check_science]=='SCIENCE' and
+                    header[check_slit]!='Free'):
+                        # Sub array with each image info
+                        image_info = []
+                        for key in keys:
+                            image_info.append(header[key])
+                        image_info = sp.array(image_info)
+
+                        images_info.append(image_info)
+                    else:
+                        continue
             except:
                 continue
         images_info = sp.array(images_info)
@@ -95,7 +111,22 @@ paths = sp.array(paths)
 path_2sav = input('>>>Path to save log file?:')
 
 log = log_creator(paths, 'EFOSC')
-log.head_reader()
+log.head_reader('phot')
 log.log_save(path_2sav)
 
-# Test path ../../../../SN2016aiy/PHOT/EFOSC_OPT/2016_07/2016_07_26_bien_pbienr
+# Test paths phot
+#../../../../SN2016aiy/PHOT/EFOSC_OPT/2016_07/2016_07_26_bien_pbienr
+#../../../../SN2016aiy/PHOT/EFOSC_OPT/2016_09/2016_09_08_bien_pbienr
+#../../../../SN2016aiy/PHOT/EFOSC_OPT/2016_09/2016_09_18_bien_pbienr
+#../../../../SN2016aiy/PHOT/EFOSC_OPT/2016_09/2016_09_19_bien_pbienr
+#../../../../SN2016aiy/PHOT/EFOSC_OPT/2017_01/2017_01_27_bien_pbienr
+#../../../../SN2016aiy/PHOT/EFOSC_OPT/2017_02/2017_02_06_bien_pbienr
+#../../../../SN2016aiy/PHOT/EFOSC_OPT/2018_01/2018_01_14_bien_pbienr
+
+#Test path spec
+#../../../../SN2016aiy/SPEC/EFOSC_OPT/Espectros_reducidos_wo_wl_fix/2016_02
+#../../../../SN2016aiy/SPEC/EFOSC_OPT/Espectros_reducidos_wo_wl_fix/2016_03/2016_03_09_bien_sbienr
+#../../../../SN2016aiy/SPEC/EFOSC_OPT/Espectros_reducidos_wo_wl_fix/2016_04/2016_04_13_bien_sbienr
+#../../../../SN2016aiy/SPEC/EFOSC_OPT/Espectros_reducidos_wo_wl_fix/2016_07/2016_07_25_bien_sbienr
+#../../../../SN2016aiy/SPEC/EFOSC_OPT/Espectros_reducidos_wo_wl_fix/2016_07/2016_07_26_bien_sbienr
+#../../../../SN2016aiy/SPEC/EFOSC_OPT/Espectros_reducidos_wo_wl_fix/2016_09/2016_09_07_bien_sbienr
