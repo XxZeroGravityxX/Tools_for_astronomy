@@ -84,10 +84,10 @@ class log_creator(object):
 
         self.image_info = images_info_dict
 
-    def log_save(self, path):
+    def log_save(self, path, sort_by='ARCFILE'):
         '''Saves to path, the images information obtained from the
         header to an csv log file'''
-        df = pd.DataFrame(data=self.image_info)
+        df = pd.DataFrame(data=self.image_info).sort_values(by='ARCFILE').reset_index(drop=True)
 
         # Create path if doesn't exist
         try:
