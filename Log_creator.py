@@ -115,18 +115,21 @@ log.head_reader('phot')
 log.log_save(path_2sav)
 
 # Test paths phot
-#../../../../SN2016aiy/PHOT/EFOSC_OPT/2016_07/2016_07_26_bien_pbienr
-#../../../../SN2016aiy/PHOT/EFOSC_OPT/2016_09/2016_09_08_bien_pbienr
-#../../../../SN2016aiy/PHOT/EFOSC_OPT/2016_09/2016_09_18_bien_pbienr
-#../../../../SN2016aiy/PHOT/EFOSC_OPT/2016_09/2016_09_19_bien_pbienr
-#../../../../SN2016aiy/PHOT/EFOSC_OPT/2017_01/2017_01_27_bien_pbienr
-#../../../../SN2016aiy/PHOT/EFOSC_OPT/2017_02/2017_02_06_bien_pbienr
-#../../../../SN2016aiy/PHOT/EFOSC_OPT/2018_01/2018_01_14_bien_pbienr
-
+'''
+['../../../../SN2016aiy/PHOT/EFOSC_OPT/2016_07/2016_07_26_bien_pbienr',
+'../../../../SN2016aiy/PHOT/EFOSC_OPT/2016_09/2016_09_08_bien_pbienr',
+'../../../../SN2016aiy/PHOT/EFOSC_OPT/2016_09/2016_09_18_bien_pbienr',
+'../../../../SN2016aiy/PHOT/EFOSC_OPT/2016_09/2016_09_19_bien_pbienr',
+'../../../../SN2016aiy/PHOT/EFOSC_OPT/2017_01/2017_01_27_bien_pbienr',
+'../../../../SN2016aiy/PHOT/EFOSC_OPT/2017_02/2017_02_06_bien_pbienr',
+'../../../../SN2016aiy/PHOT/EFOSC_OPT/2018_01/2018_01_14_bien_pbienr']
+'''
 #Test path spec
-#../../../../SN2016aiy/SPEC/EFOSC_OPT/Espectros_reducidos_wo_wl_fix/2016_02
-#../../../../SN2016aiy/SPEC/EFOSC_OPT/Espectros_reducidos_wo_wl_fix/2016_03/2016_03_09_bien_sbienr
-#../../../../SN2016aiy/SPEC/EFOSC_OPT/Espectros_reducidos_wo_wl_fix/2016_04/2016_04_13_bien_sbienr
-#../../../../SN2016aiy/SPEC/EFOSC_OPT/Espectros_reducidos_wo_wl_fix/2016_07/2016_07_25_bien_sbienr
-#../../../../SN2016aiy/SPEC/EFOSC_OPT/Espectros_reducidos_wo_wl_fix/2016_07/2016_07_26_bien_sbienr
-#../../../../SN2016aiy/SPEC/EFOSC_OPT/Espectros_reducidos_wo_wl_fix/2016_09/2016_09_07_bien_sbienr
+'''
+['../../../../SN2016aiy/SPEC/EFOSC_OPT/Espectros_reducidos_wo_wl_fix/2016_02',
+'../../../../SN2016aiy/SPEC/EFOSC_OPT/Espectros_reducidos_wo_wl_fix/2016_03/2016_03_09_bien_sbienr',
+'../../../../SN2016aiy/SPEC/EFOSC_OPT/Espectros_reducidos_wo_wl_fix/2016_04/2016_04_13_bien_sbienr',
+'../../../../SN2016aiy/SPEC/EFOSC_OPT/Espectros_reducidos_wo_wl_fix/2016_07/2016_07_25_bien_sbienr',
+'../../../../SN2016aiy/SPEC/EFOSC_OPT/Espectros_reducidos_wo_wl_fix/2016_07/2016_07_26_bien_sbienr',
+'../../../../SN2016aiy/SPEC/EFOSC_OPT/Espectros_reducidos_wo_wl_fix/2016_09/2016_09_07_bien_sbienr']
+'''
