@@ -79,8 +79,11 @@ class log_creator(object):
 
         # Create dictionary from the previous array with the images information
         images_info_dict = {}
-        for ind,key in enumerate(keys):
-            images_info_dict[key] = images_info[:,ind]
+        try:
+            for ind,key in enumerate(keys):
+                images_info_dict[key] = images_info[:,ind]
+        except:
+            print('Default keyword not found')
 
         self.image_info = images_info_dict
 
