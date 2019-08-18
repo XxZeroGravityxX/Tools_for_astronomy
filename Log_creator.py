@@ -15,7 +15,7 @@ class log_creator(object):
 
         for path in paths:
             for name in os.listdir(path):
-                if (std_name_file in name) and (name[-4:]=='fits'):
+                if (name[0:2] in std_name_file) and (name[-4:]=='fits'):
                     image_names.append(name)
                     self_paths.append(path)
 
@@ -100,18 +100,29 @@ class log_creator(object):
 
 ### MAIN ###
 
+main = input('>>>Root path to search for images?:')
+
+specphot = input('>>>Spectroscopy or photometry?:')
+
 paths = []
 while True:
-	inp = input('>>>Path/s to search for images?:') # raw_input en python 2.7
-	if inp=="exit":
-		break
-	paths.append(inp)
+    date = input('>>>Dates (yyyymmdd)?:') # raw_input en python 2.7
+    if date=="exit":
+        break
+    if specphot=='phot':
+        suf = "_bien_pbienr"
+    else:
+        suf = "_bien_sbienr"
+    path = main + "/" + date[:4] + "_" + date[4:6] + "/" + date[:4] + "_" + date[4:6] +\
+           "_" + date[6:] + suf
+
+    paths.append(path)
 paths = sp.array(paths)
 
 path_2sav = input('>>>Path to save log file?:')
 
 log = log_creator(paths, 'EFOSC')
-log.head_reader('phot')
+log.head_reader(specphot)
 log.log_save(path_2sav)
 
 # Test paths phot
