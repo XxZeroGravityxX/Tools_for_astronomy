@@ -4,7 +4,7 @@ import pandas as pd
 from astropy.io import fits
 
 class log_creator(object):
-    def __init__(self, paths, std_name_file):
+    def __init__(self, paths, std_name_file='ALL'):
         '''Initializes the class with the names of images in the
         paths given as input that matches the standard name for
         the images wanted'''
@@ -13,11 +13,17 @@ class log_creator(object):
 
         image_names = []
 
-        for path in paths:
-            for name in os.listdir(path):
-                if (name[0:2] in std_name_file) and (name[-4:]=='fits'):
+        if std_name_file=='ALL':
+            for path in paths:
+                for name in os.listdir(path):
                     image_names.append(name)
                     self_paths.append(path)
+        else:
+            for path in paths:
+                for name in os.listdir(path):
+                    if (name[0:2] in std_name_file) and (name[-4:]=='fits'):
+                        image_names.append(name)
+                        self_paths.append(path)
 
         self.paths = sp.array(self_paths)
         self.image_names = sp.array(image_names)
@@ -103,47 +109,48 @@ class log_creator(object):
 
 ### MAIN ###
 
-main = input('>>>Root path to search for images?:')
+### Get instrument from user
 
-specphot = input('>>>Spectroscopy or photometry?:')
+ins = input('>>>Instrument ([EFOSC]/LCOGT) ?:')
 
-paths = []
-while True:
-    date = input('>>>Dates (yyyymmdd)?:') # raw_input en python 2.7
-    if date=="exit":
-        break
-    if specphot=='phot':
-        suf = "_bien_pbienr"
-    else:
-        suf = "_bien_sbienr"
-    path = main + "/" + date[:4] + "_" + date[4:6] + "/" + date[:4] + "_" + date[4:6] +\
-           "_" + date[6:] + suf
+if ins=='':
+    ins = 'EFOSC'
 
-    paths.append(path)
-paths = sp.array(paths)
+### Get paths of images from user
 
-path_2sav = input('>>>Path to save log file?:')
+if ins=='EFOSC':
+    main = input('>>>Root path to search for images?:')
 
-log = log_creator(paths, 'EFOSC')
-log.head_reader(specphot)
-log.log_save(path_2sav)
+    specphot = input('>>>Spectroscopy or photometry?:')
 
-# Test paths phot
-'''
-['../../../../SN2016aiy/PHOT/EFOSC_OPT/2016_07/2016_07_26_bien_pbienr',
-'../../../../SN2016aiy/PHOT/EFOSC_OPT/2016_09/2016_09_08_bien_pbienr',
-'../../../../SN2016aiy/PHOT/EFOSC_OPT/2016_09/2016_09_18_bien_pbienr',
-'../../../../SN2016aiy/PHOT/EFOSC_OPT/2016_09/2016_09_19_bien_pbienr',
-'../../../../SN2016aiy/PHOT/EFOSC_OPT/2017_01/2017_01_27_bien_pbienr',
-'../../../../SN2016aiy/PHOT/EFOSC_OPT/2017_02/2017_02_06_bien_pbienr',
-'../../../../SN2016aiy/PHOT/EFOSC_OPT/2018_01/2018_01_14_bien_pbienr']
-'''
-#Test path spec
-'''
-['../../../../SN2016aiy/SPEC/EFOSC_OPT/Espectros_reducidos_wo_wl_fix/2016_02',
-'../../../../SN2016aiy/SPEC/EFOSC_OPT/Espectros_reducidos_wo_wl_fix/2016_03/2016_03_09_bien_sbienr',
-'../../../../SN2016aiy/SPEC/EFOSC_OPT/Espectros_reducidos_wo_wl_fix/2016_04/2016_04_13_bien_sbienr',
-'../../../../SN2016aiy/SPEC/EFOSC_OPT/Espectros_reducidos_wo_wl_fix/2016_07/2016_07_25_bien_sbienr',
-'../../../../SN2016aiy/SPEC/EFOSC_OPT/Espectros_reducidos_wo_wl_fix/2016_07/2016_07_26_bien_sbienr',
-'../../../../SN2016aiy/SPEC/EFOSC_OPT/Espectros_reducidos_wo_wl_fix/2016_09/2016_09_07_bien_sbienr']
-'''
+    paths = []
+    while True:
+        date = input('>>>Dates (yyyymmdd)?:') # raw_input en python 2.7
+        if date=="exit":
+            break
+        if specphot=='phot':
+            suf = "_bien_pbienr"
+        else:
+            suf = "_bien_sbienr"
+        path = main + "/" + date[:4] + "_" + date[4:6] + "/" + date[:4] + "_" + date[4:6] +\
+               "_" + date[6:] + suf
+
+        paths.append(path)
+    paths = sp.array(paths)
+
+    path_2sav = input('>>>Path to save log file?:')
+
+    log = log_creator(paths, 'EFOSC')
+    log.head_reader(specphot)
+    log.log_save(path_2sav)
+
+elif ins=='LCOGT':
+    main = input('>>>Root path to search for images?:')
+
+    specphot = input('>>>Spectroscopy or photometry?:')
+
+    path_2sav = input('>>>Path to save log file?:')
+
+    log = log_creator(main, 'ALL')
+    log.head_reader(specphot)
+    log.log_save(path_2sav)
