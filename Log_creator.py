@@ -14,10 +14,9 @@ class log_creator(object):
         image_names = []
 
         if std_name_file=='ALL':
-            for path in paths:
-                for name in os.listdir(path):
-                    image_names.append(name)
-                    self_paths.append(path)
+            for name in os.listdir(paths):
+                image_names.append(name)
+                self_paths.append(paths)
         else:
             for path in paths:
                 for name in os.listdir(path):
@@ -140,7 +139,7 @@ if ins=='EFOSC':
 
     path_2sav = input('>>>Path to save log file?:')
 
-    log = log_creator(paths, 'EFOSC')
+    log = log_creator(paths, std_name_file='EFOSC')
     log.head_reader(specphot)
     log.log_save(path_2sav)
 
@@ -151,6 +150,6 @@ elif ins=='LCOGT':
 
     path_2sav = input('>>>Path to save log file?:')
 
-    log = log_creator(main, 'ALL')
+    log = log_creator(main, std_name_file='ALL')
     log.head_reader(specphot)
     log.log_save(path_2sav)
