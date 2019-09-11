@@ -161,6 +161,6 @@ elif ins=='LCOGT':
 
     path_2sav = input('>>>Path to save log file?:')
 
-    log = log_creator(main, std_name_file='ALL')
+    log = log_creator(paths, std_name_file='ALL')
     log.head_reader(specphot)
     log.log_save(path_2sav)
