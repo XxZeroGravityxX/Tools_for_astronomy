@@ -148,6 +148,17 @@ elif ins=='LCOGT':
 
     specphot = input('>>>Spectroscopy or photometry?:')
 
+    paths = []
+    while True:
+        date = input('>>>Dates (yyyymmdd)?:') # raw_input en python 2.7
+        if date=="exit":
+            break
+        path = main + "/" + date[:4] + "_" + date[4:6] + "/" + date[:4] + "_" + date[4:6] +\
+               "_" + date[6:]
+
+        paths.append(path)
+    paths = sp.array(paths)
+
     path_2sav = input('>>>Path to save log file?:')
 
     log = log_creator(main, std_name_file='ALL')
